@@ -1,12 +1,6 @@
 FROM node:6.5.0
 MAINTAINER Sa
 
-# Prepare app directory
-RUN mkdir -p /usr/src/app
-ADD . /usr/src/app
-
-# Install dependencies
-WORKDIR /usr/src/app
 RUN npm install
 
 # Build the app
