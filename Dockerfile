@@ -14,6 +14,3 @@ RUN npm build
 
 # Expose the app port
 EXPOSE 80 8080
-
-# Start the app
-CMD npm start
