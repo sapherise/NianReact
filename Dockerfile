@@ -1,17 +1,19 @@
-# Using a compact OS
-MAINTAINER Sa <sa@nian.so> 
+FROM node:6.5.0
+MAINTAINER Sa
 
-# Install and configure Nginx
-RUN apk --update add nginx
-RUN sed -i "s#root   html;#root   /usr/share/nginx/html;#g" /etc/nginx/nginx.conf
-RUN ln -sf /dev/stdout /var/log/nginx/access.log \
-	&& ln -sf /dev/stderr /var/log/nginx/error.log
-	
-# Add 2048 stuff into Nginx server
-COPY . /usr/share/nginx/html
+# Prepare app directory
+RUN mkdir -p /usr/src/app
+ADD . /usr/src/app
 
+# Install dependencies
+WORKDIR /usr/src/app
+RUN npm install
+
+# Build the app
+RUN npm build
+
+# Expose the app port
 EXPOSE 80
 
-# Start Nginx and keep it from running background
-CMD ["nginx", "-g", "pid /tmp/nginx.pid; daemon off;"]
-
+# Start the app
+CMD npm start
